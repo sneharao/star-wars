@@ -2,24 +2,25 @@ import { useEffect, useState } from "react";
 import { Card, Col, Container, Row, Spinner } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import { Character } from "../models/character.model";
-import { getCharacterList } from "../shared/apiIntegrator";
+import { getCharacterList } from "../shared/fetchData";
 
 
 function Home() {
     const navigate = useNavigate();
     const [characters, setCharacters] = useState<Character[]>([]);
     const [isLoading, setIsLoading] = useState<boolean>(false);
+    const [hasErrorOccured, setHasErrorOccured] = useState<boolean>(false);
     useEffect(() => {
         setIsLoading(true);
         getCharacterList().then(data => {
             if(data) {
-                console.log(data);
                 setCharacters(data);
             }
             setIsLoading(false);
         }, err => {
             console.log(err.message);
             setIsLoading(false);
+            setHasErrorOccured(true);
         });
     }, [])
 
@@ -56,6 +57,7 @@ function Home() {
         {isLoading && <Spinner animation="border" role="status">
             <span className="visually-hidden" data-testid="loader">Loading...</span>
         </Spinner>}
+        {hasErrorOccured && <p className="error-text">An Error has occurred!</p>}
     </>)
 }
 export default Home;

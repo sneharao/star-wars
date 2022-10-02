@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { Card, Col, Row } from "react-bootstrap";
 import { useLocation } from "react-router-dom";
-import { getPlanetName } from "../shared/apiIntegrator";
+import { getPlanetName } from "../shared/fetchData";
 
 function DetailsPage() {
     const { state } = useLocation();
