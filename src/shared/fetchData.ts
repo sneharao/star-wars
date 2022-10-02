@@ -1,4 +1,3 @@
-import { Character } from "../models/character.model";
 
 export const getCharacterList = async () => {
     try {
@@ -14,7 +13,7 @@ export const getCharacterList = async () => {
         let responseJson = await response.json();
         return responseJson.results;
     } catch (error) {
-        console.error(error);
+        throw error;
     }
 };
 
