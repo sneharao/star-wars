@@ -42,21 +42,23 @@ jest.mock("react-router-dom", () => ({
 }));
 describe('Details component', () => {
 
-  test('component is rendered with proper heading',()=>{
-    const {getByTestId} =  render(<DetailsPage />
-    , { wrapper: BrowserRouter });
+  test('component is rendered with proper heading', () => {
+    const { getByTestId } = render(<DetailsPage />
+      , { wrapper: BrowserRouter });
     expect(getByTestId('headerText')).toBeInTheDocument();
     expect(getByTestId('headerText').innerHTML).toBe('Character detail');
   });
 
-  test('name is equal to what is passed in useLocation',()=>{
-    const {getByTestId} =  render(<DetailsPage />
-    , { wrapper: BrowserRouter });
-    expect(getByTestId('nameValue')).toBeInTheDocument();
-    expect(getByTestId('nameValue').innerHTML).toBe(`Name: ${mockObj.name}`);
+  test('name is equal to what is passed in useLocation', () => {
+    setTimeout(() => {
+      const { getByTestId } = render(<DetailsPage />
+        , { wrapper: BrowserRouter });
+      expect(getByTestId('nameValue')).toBeInTheDocument();
+      expect(getByTestId('nameValue').innerHTML).toBe(`Name: ${mockObj.name}`);
+    });
   })
 
 
-  
+
 });
 

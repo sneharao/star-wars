@@ -1,29 +1,37 @@
 import { useEffect, useState } from "react";
-import { Card, Col, Row } from "react-bootstrap";
+import { Card, Col, Row, Spinner } from "react-bootstrap";
 import { useLocation } from "react-router-dom";
 import { getPlanetName } from "../shared/fetchData";
 
 function DetailsPage() {
     const { state } = useLocation();
     const [planet, setPlanet] = useState<String>("");
+    const [isLoading, setIsLoading] = useState<boolean>(true);
     const { name, hair_color: hairColor, eye_color: eyeColor, gender, homeworld } = state;
     useEffect(() => {
         getPlanetName(homeworld).then(data => {
+            setIsLoading(false);
             if (data) {
                 setPlanet(data);
             }
         }, err => {
+            setIsLoading(false);
             console.log(err.message);
         });
-    }, [])
+    }, [homeworld]);
     return (
         <>
             <h3 className="mb-3" data-testid="headerText">Character detail</h3>
-            <Card style={{ width: '30rem', cursor: 'pointer', backgroundColor: '#105263' }}
+            {!isLoading && <Card style={{ width: '30rem', cursor: 'pointer', backgroundColor: '#105263' }}
                 className="mb-2"
                 bg={'#105263'}>
                 <Card.Body>
-                    <Card.Title className="mb-3" data-testid="nameValue">Name: {name}</Card.Title>
+                    <Row>
+                        <Col className="alignLeft"><h4>Name:</h4></Col>
+                        <Col  data-testid="nameValue">
+                            {name}
+                        </Col>
+                    </Row>
                     <Row>
                         <Col className="alignLeft"><h4>Hair color:</h4></Col>
                         <Col>
@@ -49,7 +57,10 @@ function DetailsPage() {
                         </Col>
                     </Row>
                 </Card.Body>
-            </Card>
+            </Card>}
+            {isLoading && <Spinner animation="border" role="status">
+            <span className="visually-hidden" data-testid="loader">Loading...</span>
+        </Spinner>}
         </>
     )
 }
