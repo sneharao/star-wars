@@ -82,7 +82,7 @@ describe('Home component', () => {
     expect(getByTestId('headerText').innerHTML).toBe('Character list');
   });
 
-  test('loads two records as returned by the service', async () => {
+  test('loads two records as returned by the service', () => {
     const mockGetCharacters = jest.spyOn(fetchData, 'getCharacterList');
     mockGetCharacters.mockImplementation(() => Promise.resolve(mockCharacterList));
     setTimeout(() => {
@@ -92,10 +92,9 @@ describe('Home component', () => {
     }, 500);
   });
 
-  test('should navigate to details page on click of card ', async () => {
+  test('should navigate to details page on click of card ', () => {
     const mockGetCharacters = jest.spyOn(fetchData, 'getCharacterList');
     mockGetCharacters.mockImplementation(() => Promise.resolve(mockCharacterList));
-
     setTimeout(() => {
       const { getByTestId } = render(<Home />, { wrapper: BrowserRouter });
       const card = getByTestId('cardContent');
